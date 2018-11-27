@@ -124,6 +124,9 @@ class MonthViewAdapter extends BaseAdapter {
     public void updateYear(int selectedYear) {
         if(minCal.get(Calendar.YEAR) == selectedYear) {
             _minMonth = minCal.get(Calendar.MONTH);
+            if(_activatedMonth < _minMonth) {
+                _activatedMonth = _minMonth;
+            }
         } else {
             _minMonth = Calendar.JANUARY;
         }
