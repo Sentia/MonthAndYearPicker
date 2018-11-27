@@ -104,9 +104,9 @@ class MonthPickerView extends FrameLayout {
         int headerTitleColor = a.getColor(R.styleable.monthPickerDialog_headerTitleColor, 0);
         int actionButtonColor = a.getColor(R.styleable.monthPickerDialog_dialogActionButtonColor, 0);
 
-         if (monthFontColorNormal == 0) {
+        if (monthFontColorNormal == 0) {
 
-             monthFontColorNormal = getResources().getColor(R.color.fontBlackEnable);
+            monthFontColorNormal = getResources().getColor(R.color.fontBlackEnable);
 
            /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 monthFontColorNormal = android.R.attr.textColor;
@@ -217,7 +217,7 @@ class MonthPickerView extends FrameLayout {
             _header.setBackgroundColor(headerBgColor);
         if (monthBgColor != 0)
             _pickerBg.setBackgroundColor(monthBgColor);
-        if(monthBgColor != 0)
+        if (monthBgColor != 0)
             _actionBtnLay.setBackgroundColor(monthBgColor);
 
         ok.setOnClickListener(new OnClickListener() {
@@ -264,6 +264,9 @@ class MonthPickerView extends FrameLayout {
                 _year.setText("" + selectedYear);
                 _year.setTextColor(_headerFontColorSelected);
                 _month.setTextColor(_headerFontColorNormal);
+
+                _monthViewAdapter.updateYear(selectedYear);
+
                 if (_onYearChanged != null) {
                     _onYearChanged.onYearChanged(selectedYear);
                 }
@@ -280,7 +283,7 @@ class MonthPickerView extends FrameLayout {
                 }
             }
         });
-        _year.setOnClickListener(new OnClickListener(){
+        _year.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -308,6 +311,10 @@ class MonthPickerView extends FrameLayout {
         }
     }
 
+    protected void setMinCal(Calendar min) {
+        _monthViewAdapter.setMinCal(min);
+        _yearView.setMinYear(min.get(Calendar.YEAR));
+    }
 
     protected void setMinMonth(int minMonth) {
         if (minMonth >= Calendar.JANUARY && minMonth <= Calendar.DECEMBER) {
@@ -342,7 +349,7 @@ class MonthPickerView extends FrameLayout {
     protected void setActivatedMonth(int activatedMonth) {
         if (activatedMonth >= Calendar.JANUARY && activatedMonth <= Calendar.DECEMBER) {
             _monthViewAdapter.setActivatedMonth(activatedMonth);
-           _month.setText(_monthNames[activatedMonth]);
+            _month.setText(_monthNames[activatedMonth]);
         } else {
             throw new IllegalArgumentException("Month out of range please send months between Calendar.JANUARY, Calendar.DECEMBER");
         }
@@ -415,16 +422,17 @@ class MonthPickerView extends FrameLayout {
     }
 
 
-    public interface OnDateSet{
+    public interface OnDateSet {
         void onDateSet();
     }
-    public interface OnCancel{
+
+    public interface OnCancel {
         void onCancel();
     }
 
     MonthPickerDialog.OnConfigChangeListener configChangeListener;
 
-    protected void setOnConfigurationChanged(MonthPickerDialog.OnConfigChangeListener configChangeListener){
+    protected void setOnConfigurationChanged(MonthPickerDialog.OnConfigChangeListener configChangeListener) {
         this.configChangeListener = configChangeListener;
     }
 

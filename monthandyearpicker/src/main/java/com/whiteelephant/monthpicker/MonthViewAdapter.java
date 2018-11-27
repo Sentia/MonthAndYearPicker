@@ -17,6 +17,7 @@ import java.util.HashMap;
 class MonthViewAdapter extends BaseAdapter {
 
     private int _minMonth, _maxMonth, _activatedMonth;
+    private Calendar minCal;
     private Context _context;
     private HashMap<String, Integer> _colors;
     private OnDaySelectedListener mOnDaySelectedListener;
@@ -114,6 +115,20 @@ class MonthViewAdapter extends BaseAdapter {
      */
     public void setOnDaySelectedListener(OnDaySelectedListener listener) {
         mOnDaySelectedListener = listener;
+    }
+
+    public void setMinCal(Calendar min) {
+        this.minCal = min;
+    }
+
+    public void updateYear(int selectedYear) {
+        if(minCal.get(Calendar.YEAR) == selectedYear) {
+            _minMonth = minCal.get(Calendar.MONTH);
+        } else {
+            _minMonth = Calendar.JANUARY;
+        }
+        _maxMonth = Calendar.DECEMBER;
+        notifyDataSetInvalidated();
     }
 
     public interface OnDaySelectedListener {

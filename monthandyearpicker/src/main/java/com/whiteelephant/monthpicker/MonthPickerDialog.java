@@ -55,7 +55,7 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
                 }
 
                 return;
-            }else {
+            } else {
                 dismiss();
             }
         }
@@ -199,12 +199,12 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
         private int _activatedMonth, _activatedYear;
         private int _minMonth = Calendar.JANUARY, _maxMonth = Calendar.DECEMBER;
         private int _minYear, _maxYear;
+        private Calendar minCal;
         private boolean monthOnly, yearOnly;
         private String title = null;
         private MonthPickerDialog monthPickerDialog;
         private OnYearChangedListener _onYearChanged;
         private OnMonthChangedListener _onMonthChanged;
-
 
         /**
          * Build a Dialog with month and year with given context.
@@ -252,9 +252,14 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
             } else {
                 _maxYear = MonthPickerView._maxYear;
             }
-
-
         }
+
+
+        public Builder setMinCal(Calendar min) {
+            this.minCal = min;
+            return this;
+        }
+
 
         /**
          * Minimum enable month in picker (0-11 for compatibility with Calender.MONTH or
@@ -515,9 +520,15 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
                 _maxMonth = 0;
                 _activatedMonth = 0;
             }
-            monthPickerDialog.setMinMonth(_minMonth);
+
+            if (minCal != null) {
+                monthPickerDialog.setMinCal(minCal);
+            } else {
+                monthPickerDialog.setMinMonth(_minMonth);
+                monthPickerDialog.setMinYear(_minYear);
+            }
+
             monthPickerDialog.setMaxMonth(_maxMonth);
-            monthPickerDialog.setMinYear(_minYear);
             monthPickerDialog.setMaxYear(_maxYear);
             monthPickerDialog.setActivatedMonth(_activatedMonth);
             monthPickerDialog.setActivatedYear(_activatedYear);
@@ -535,6 +546,10 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
             }
             return monthPickerDialog;
         }
+    }
+
+    private void setMinCal(Calendar minCal) {
+        _monthPicker.setMinCal(minCal);
     }
 
     /**
@@ -571,7 +586,7 @@ public class MonthPickerDialog extends AlertDialog implements OnClickListener, O
         void onYearChanged(int year);
     }
 
-    public interface OnConfigChangeListener{
+    public interface OnConfigChangeListener {
 
         void onConfigChange();
     }
