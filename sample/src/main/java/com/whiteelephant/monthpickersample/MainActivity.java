@@ -61,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
 
+                Calendar min = Calendar.getInstance();
+                min.set(Calendar.YEAR, 2015);
+                min.set(Calendar.MONTH, Calendar.JUNE);
+
                 builder.setActivatedMonth(Calendar.JULY)
-                        .setMinYear(1990)
-                        .setActivatedYear(2017)
-                        .setMaxYear(2030)
-                        .setMinMonth(Calendar.FEBRUARY)
+                        .setMinCal(min)
+                        .setActivatedYear(2018)
+                        .setActivatedMonth(9)
                         .setTitle("Select trading month")
                         .setMonthRange(Calendar.FEBRUARY, Calendar.NOVEMBER)
                         // .setMaxMonth(Calendar.OCTOBER)
@@ -89,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .build()
                         .show();
-
             }
         });
 
