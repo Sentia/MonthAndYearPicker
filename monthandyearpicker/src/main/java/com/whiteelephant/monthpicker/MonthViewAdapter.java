@@ -131,6 +131,7 @@ class MonthViewAdapter extends BaseAdapter {
             _minMonth = Calendar.JANUARY;
         }
         _maxMonth = Calendar.DECEMBER;
+        mOnDaySelectedListener.onDaySelected(MonthViewAdapter.this, _activatedMonth);
         notifyDataSetInvalidated();
     }
 
